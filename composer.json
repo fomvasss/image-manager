@@ -1,0 +1,22 @@
+{
+    "name": "fomvasss/image-manager",
+    "description": "The package image-manager for Laravel 5.3",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fomin Vasyl",
+            "email": "fomvasss@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.9",
+        "intervention/image": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fomvasss\\ImageManager\\": "src"
+        }
+    }
+}
