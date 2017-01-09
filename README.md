@@ -3,7 +3,7 @@ Package for storing and processing the images based on Intervention Image in Lar
 
 # Install
 ```
-composer require "fomvasss/image-manager":dev-master
+composer require "fomvasss/image-manager":"2.0"
 ```
 register the service provider and aliases in config/app.php:
 ```
