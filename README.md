@@ -1,4 +1,4 @@
-# Image Manager v.2.0.1
+# Image Manager v.2.0.2
 Package for storing and processing the images based on Intervention Image in Laravel 5.3
 
 # Install
@@ -33,7 +33,7 @@ ImageManager::destray($filename); //returt bool
 
 ```
 ```
-ImageManager::regeneration();  //return int count
+ImageManager::regeneration();  
 ```
 
 
