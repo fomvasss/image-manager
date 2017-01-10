@@ -33,7 +33,7 @@ ImageManager::destray($filename); //returt bool
 
 ```
 ```
-ImageManager::regeneration();  
+ImageManager::regeneration(); //
 ```
 
 
