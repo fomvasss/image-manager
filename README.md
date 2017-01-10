@@ -1,9 +1,9 @@
-# Image Manager v.2.0
+# Image Manager v.2.0.1
 Package for storing and processing the images based on Intervention Image in Laravel 5.3
 
 # Install
 ```
-composer require "fomvasss/image-manager":"2.0.1"
+composer require "fomvasss/image-manager"
 ```
 register the service provider and aliases in config/app.php:
 ```
