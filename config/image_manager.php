@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | ImageManager v.2
+    | ImageManager v.2.0.1
     |--------------------------------------------------------------------------
     |
     |
@@ -12,7 +12,7 @@ return [
 
     'origin' => [
         'make' => true,
-        'path' => '/uploads/photos/',
+        'path' => '/uploads/img/',
     ],
 
     'original_name' => false,
@@ -20,7 +20,7 @@ return [
     'more' => [
         'large' => [
             'make' => false,
-            'path' => '/uploads/photos/large/',
+            'path' => '/large/',
             'width' => 1280,
             'height' => 1024,
             'compress' => 60,
@@ -29,7 +29,7 @@ return [
 
         'medium' => [
             'make' => false,
-            'path' => '/uploads/photos/medium/',
+            'path' => '/medium/',
             'width' => 640,
             'height' => 480,
             'compress' => 60,
@@ -38,7 +38,7 @@ return [
 
         'small' => [
             'make' => false,
-            'path' => '/uploads/photos/small/',
+            'path' => '/small/',
             'width' => 250,
             'height' => 180,
             'compress' => 60,

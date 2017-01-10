@@ -14,6 +14,8 @@ class ImageManager
 
     private $originPath;
 
+    private $imgPath;
+
     private $more;
 
     private $originFileName;
@@ -28,6 +30,8 @@ class ImageManager
         $this->rootPath = public_path();
 
         $this->originPath = config('image_manager.origin.path');
+
+        $this->imgPath = $this->rootPath .'/'. $this->originPath;
 
         $this->originFileName = config('image_manager.original_name');
 
@@ -61,7 +65,7 @@ class ImageManager
 
             config('image_manager.origin.make') ? $file->move($path, $fileName) : null;
 
-            $names[] = ['img' => $fileName, 'title' => empty($titles[$i]) ? null : $titles[$i], 'alt' => empty($alts[$i]) ? null : $alts[$i] ];
+            $names[] = ['name' => $fileName, 'title' => empty($titles[$i]) ? null : $titles[$i], 'alt' => empty($alts[$i]) ? null : $alts[$i] ];
         }
 
         return $names;
@@ -73,12 +77,12 @@ class ImageManager
      */
     public function destroy($file)
     {
-        if (file_exists($this->rootPath .'/'. $this->originPath .'/'. $file)) {
-            unlink($this->rootPath .'/'. $this->originPath .'/'. $file);
+        if (file_exists($this->imgPath .'/'. $file)) {
+            unlink($this->imgPath .'/'. $file);
         }
         foreach ($this->more as $path) {
-            if (file_exists($this->rootPath .'/'.$path['path'].'/'.$file)) {
-                unlink($this->rootPath .'/'.$path['path'].'/'.$file);
+            if (is_file($this->imgPath .'/'. $path['path'].'/'.$file)) {
+                unlink($this->imgPath .'/'. $path['path'].'/'.$file);
             }
         }
         return true;
@@ -87,26 +91,21 @@ class ImageManager
 
     public function regeneration()
     {
-        $dir = $this->rootPath .'/'. $this->originPath;
+        $dir = $this->imgPath;
         $files = glob($dir.'/{,.}*', GLOB_BRACE); // get all file names
 
-        dd($files);
-
-
         foreach($files as $file){ // iterate files
-
-
             foreach ($this->more as $path) {
-                if (file_exists($this->rootPath .'/'.$path['path'].'/'.$file)) {
-                    unlink($this->rootPath .'/'.$path['path'].'/'.$file);
+                if (is_file($this->imgPath .'/'. $path['path'].'/'.basename($file))) {
+                    unlink($this->imgPath .'/'. $path['path'].'/'.basename($file));
                 }
             }
 
-            //$this->moreImages($path, $fileName);
+            $this->moreImages($file, basename($file));
 
         }
 
-
+        return true;
 
     }
 
@@ -118,10 +117,10 @@ class ImageManager
     private function moreImages($source, $newFileName)
     {
         foreach ($this->more as $key => $item) {
-            if ($item['make'] == true)
+            if ($item['make'] == true && is_file($source) && filesize($source)>0)
             {
-                is_dir($this->rootPath .'/'. $item['path']) ? null : mkdir($this->rootPath .'/'. $item['path'], 0755, true );
-                Image::make($source)->{$item['method']}($item['width'], $item['height'])->save($this->rootPath .'/'. $item['path'] .'/'. $newFileName, $item['compress']);
+                is_dir($this->imgPath .'/'. $item['path']) ? null : mkdir($this->rootPath .'/'. $this->originPath .'/'. $item['path'], 0755, true );
+                Image::make($source)->{$item['method']}($item['width'], $item['height'])->save($this->imgPath .'/'. $item['path'] .'/'. $newFileName, $item['compress']);
             }
         }
         return true;
