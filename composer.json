@@ -17,6 +17,5 @@
         "psr-4": {
             "Fomvasss\\ImageManager\\": "src"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
