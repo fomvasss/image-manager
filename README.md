@@ -1,5 +1,5 @@
 # Image Manager v.2.3
-Package for storing and processing the images based on Intervention Image in Laravel 5.3
+Package for storing and processing the images based on Intervention Image in Laravel 5.3.29
 
 # Install
 ```
