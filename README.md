@@ -1,4 +1,4 @@
-# Image Manager v.2.0.2
+# Image Manager v.2.3
 Package for storing and processing the images based on Intervention Image in Laravel 5.3
 
 # Install
@@ -29,7 +29,7 @@ Now, you can use next:
 ImageManager::store($request->file('images'), $request->get('image_titles'), $request->get('image_alts')); //returt array[[img,title,alt],...,[img,title,alt]]
 ```
 ```
-ImageManager::destray($filename); //returt bool
+ImageManager::destroy($filename); //returt bool
 
 ```
 ```

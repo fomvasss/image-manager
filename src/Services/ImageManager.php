@@ -46,18 +46,32 @@ class ImageManager
      */
     public function store($files, $titles = null, $alts = null)
     {
-
         $names = $namesTitles = [];
 
-        if (is_dir($this->rootPath .'/'. $this->originPath)) {
-            $path = $this->rootPath . '/' . $this->originPath;
-        }
-        else {
+        if (!is_dir($this->rootPath .'/'. $this->originPath)) {
             mkdir($this->rootPath .'/'. $this->originPath .'/', 0755, true);
-            $path = $this->rootPath . '/' . $this->originPath;
         }
+        $path = $this->rootPath . '/' . $this->originPath;
 
-        foreach ($files as $i => $file) {
+        if (is_array($files)) {
+            foreach ($files as $i => $file) {
+
+                $fileName = $this->getFileNameNew($file);
+
+                $this->moreImages($file->getRealPath(), $fileName);
+
+                config('image_manager.origin.make') ? $file->move($path, $fileName) : null;
+
+                if (empty($titles) && empty($alts)) {
+                    $names[] = $fileName;
+                } else {
+                    $names[] = ['name' => $fileName, 'title' => empty($titles[$i]) ? null : $titles[$i], 'alt' => empty($alts[$i]) ? null : $alts[$i]];
+                }
+            }
+            return $names;
+
+        } else {
+            $file = $files;
 
             $fileName = $this->getFileNameNew($file);
 
@@ -65,10 +79,8 @@ class ImageManager
 
             config('image_manager.origin.make') ? $file->move($path, $fileName) : null;
 
-            $names[] = ['name' => $fileName, 'title' => empty($titles[$i]) ? null : $titles[$i], 'alt' => empty($alts[$i]) ? null : $alts[$i] ];
+            return $fileName;
         }
-
-        return $names;
     }
 
     /**
@@ -77,7 +89,7 @@ class ImageManager
      */
     public function destroy($file)
     {
-        if (file_exists($this->imgPath .'/'. $file)) {
+        if (is_file($this->imgPath .'/'. $file)) {
             unlink($this->imgPath .'/'. $file);
         }
         foreach ($this->more as $path) {
