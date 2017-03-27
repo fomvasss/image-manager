@@ -1,6 +1,6 @@
 {
     "name": "fomvasss/image-manager",
-    "description": "The package image-manager for Laravel 5.3",
+    "description": "The package image-manager for Laravel 5.*",
     "type": "package",
     "license": "MIT",
     "authors": [
