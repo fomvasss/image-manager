@@ -36,5 +36,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->bind('ImageManager', function($app){
             return new ImageManager();
         });
+
+        $configPath = __DIR__ . '/../config/image_manager.php';
+        $this->mergeConfigFrom($configPath, 'ImageManager');
     }
 }

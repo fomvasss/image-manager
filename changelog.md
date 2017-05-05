@@ -11,3 +11,8 @@
 
 ## 2.3.1 (2017-03-27)
 - Update documentation, make changelog
+
+## 2.4.0 (2017-05-05)
+- Created 'shields.io' icon in readmy.md
+- Updated default path to img in config
+- Added function compressing origin img (set 'compress' in config or env)

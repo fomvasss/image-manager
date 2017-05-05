@@ -55,12 +55,9 @@ class ImageManager
 
         if (is_array($files)) {
             foreach ($files as $i => $file) {
-
                 $fileName = $this->getFileNameNew($file);
-
                 $this->moreImages($file->getRealPath(), $fileName);
-
-                config('image_manager.origin.make') ? $file->move($path, $fileName) : null;
+                $this->saveFile($file, $path, $fileName);
 
                 if (empty($titles) && empty($alts)) {
                     $names[] = $fileName;
@@ -72,12 +69,9 @@ class ImageManager
 
         } else {
             $file = $files;
-
             $fileName = $this->getFileNameNew($file);
-
             $this->moreImages($file->getRealPath(), $fileName);
-
-            config('image_manager.origin.make') ? $file->move($path, $fileName) : null;
+            $this->saveFile($file, $path, $fileName);
 
             return $fileName;
         }
@@ -106,7 +100,7 @@ class ImageManager
         $dir = $this->imgPath;
         $files = glob($dir.'/{,.}*', GLOB_BRACE); // get all file names
 
-        foreach($files as $file){ // iterate files
+        foreach ($files as $file) {   //iterate files
             foreach ($this->more as $path) {
                 if (is_file($this->imgPath .'/'. $path['path'].'/'.basename($file))) {
                     unlink($this->imgPath .'/'. $path['path'].'/'.basename($file));
@@ -114,11 +108,9 @@ class ImageManager
             }
 
             $this->moreImages($file, basename($file));
-
         }
 
         return true;
-
     }
 
     /**
@@ -149,6 +141,18 @@ class ImageManager
             return str_replace([' ', ':'], '-', $file->getClientOriginalName()). '_' .self::$n . '.' . $file->getClientOriginalExtension();
         }
         return str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString()) . '-' . self::$n . '.' . $file->getClientOriginalExtension();
+    }
+
+    private function saveFile($file, $path, $fileName)
+    {
+        if (config('image_manager.origin.make')) {
+            $compress = config('image_manager.origin.compress');
+            if (!empty($compress) && is_numeric($compress)) {
+                Image::make($file->getRealPath())->save($path . $fileName, $compress);
+            } else {
+                $file->move($path, $fileName);
+            }
+        }
     }
 
 }

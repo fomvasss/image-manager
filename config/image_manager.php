@@ -12,7 +12,8 @@ return [
 
     'origin' => [
         'make' => true,
-        'path' => '/uploads/img/',
+        'path' => '/uploads/images/',
+        'compress' => env('IMG_MNG_SAVE_COMPRESS', false),
     ],
 
     'original_name' => false,
